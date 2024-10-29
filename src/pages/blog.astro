@@ -1,0 +1,17 @@
+---
+import Layout from "@layouts/Layout.astro";
+import BlogContainer from "@components/BlogContainer.astro";
+import { getCollection } from "astro:content";
+import GodCard from "@components/GodCard.astro";
+
+const blogPost = await getCollection(
+  "blog",
+  (post) => post.data.isDraft === false
+);
+---
+
+<Layout title="Blog god">
+  <BlogContainer title="Blog god">
+    {blogPost.map((post) => <GodCard post={post} />)}
+  </BlogContainer>
+</Layout>

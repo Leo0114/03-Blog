@@ -1,0 +1,31 @@
+---
+const rutas = [
+  { name: "Blog pocho", url: "/" },
+  { name: "Blog GOD", url: "/blog" },
+  { name: "Blog Page", url: "/blogs/1" },
+  { name: "Authors Page", url: "/authors/" },
+];
+const currentPath = Astro.url.pathname;
+---
+
+<nav
+  class="flex flex-row justify-center gap-8 items-center mx-auto py-4 text-xl font-semibold text-white"
+>
+  {
+    rutas.map(({ name, url }) => (
+      <div>
+        <a href={url} class="text-xl font-semibold  text-white">
+          {name}
+        </a>
+        {currentPath === url ? (
+          <div
+            transition:name="menu-line"
+            class=" border-b-2 border-indigo-500"
+          />
+        ) : (
+          <div class=" border-b-2 mx-4 border-transparent" />
+        )}
+      </div>
+    ))
+  }
+</nav>

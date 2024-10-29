@@ -1,0 +1,26 @@
+---
+import { ViewTransitions } from "astro:transitions";
+import "../styles/blog.css";
+
+const { ...rest } = Astro.props;
+const frontmatter = rest.frontmatter;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="description" content="Astro description" />
+    <meta name="viewport" content="width=device-width" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="generator" content={Astro.generator} />
+    <ViewTransitions />
+    <title>{frontmatter.title}</title>
+  </head>
+  <body>
+    <a onclick="window.history.back()">Regresar</a>
+    <main class="mb-10 max-w-5xl m-auto px-2 py-px">
+      <slot />
+    </main>
+  </body>
+</html>

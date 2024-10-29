@@ -1,0 +1,70 @@
+---
+import GODLayout from "@layouts/GODLayout.astro";
+import { getCollection } from "astro:content";
+import { Image } from "astro:assets";
+import { getEntry } from "astro:content";
+import { Formatter } from "@utils/formatter";
+export const getStaticPaths = async () => {
+  const blogs = await getCollection("blog");
+  return blogs.map((blog) => ({
+    params: { slug: blog.slug },
+    props: { blog },
+  }));
+};
+
+const { blog } = Astro.props;
+const { slug, data } = blog;
+const { title, image, author } = data;
+const { Content, headings } = await blog.render();
+const authors = (await getEntry("author", author.id)).data;
+---
+
+<GODLayout title={title}>
+  <h1 class="text-xs text-slate-500 mb-0">
+    {title}
+  </h1>
+
+  <div class="text-lg text-slate-400 mb0 flex flex-row mt-2">
+    <Image
+      src={authors.avatar}
+      class={"rounded-full"}
+      alt={authors.name}
+      width={48}
+      height={48}
+    />
+    <div class="flex flex-col ml-5">
+      <a href={`/blogs/${author.id}`}>
+        {authors.name}
+      </a>
+      <span class="text-xs text-slate-200"
+        >{Formatter.formatDate(new Date(data.date))}</span
+      >
+    </div>
+  </div>
+
+  <Image
+    transition:name={`${slug}-img`}
+    src={image}
+    alt={title}
+    width={640}
+    height={360}
+    class={"object-cover rounded-lg w-full h-[360px] my-5 "}
+  />
+  <h3>Tabla de contenidos</h3>
+  <ol>
+    {
+      headings.map((heading, index) => (
+        <li>
+          <a href={`#${heading.slug}`}>
+            {index + 1} - {heading.text}
+          </a>
+        </li>
+      ))
+    }
+  </ol>
+  <Content />
+
+  <div class="my-20">
+    <a href="#btn-back">Ir Arriba</a>
+  </div>
+</GODLayout>

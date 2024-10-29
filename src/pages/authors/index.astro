@@ -1,0 +1,14 @@
+---
+import Layout from "@layouts/Layout.astro";
+import BlogContainer from "@components/BlogContainer.astro";
+import { getCollection } from "astro:content";
+import GodAuthorsPost from "@components/GodAuthorsPost.astro";
+
+const authorsPost = await getCollection("author");
+---
+
+<Layout title="Authors">
+  <BlogContainer title="Authos">
+    {authorsPost.map((post) => <GodAuthorsPost post={post} />)}
+  </BlogContainer>
+</Layout>

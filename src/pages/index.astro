@@ -1,0 +1,15 @@
+---
+import Layout from "../layouts/Layout.astro";
+import { siteConfig } from "../config/site-confi";
+import BlogPost from "../components/BlogPost.astro";
+import BlogContainer from "@components/BlogContainer.astro";
+
+const posts = await Astro.glob("./posts/*.{md,mdx}");
+---
+
+<Layout title="blog glob">
+  <!-- component -->
+  <BlogContainer title="Blog glob">
+    {posts.map((post) => <BlogPost {...post} />)}
+  </BlogContainer>
+</Layout>
